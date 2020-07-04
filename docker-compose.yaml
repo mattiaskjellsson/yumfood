@@ -1,0 +1,21 @@
+version: '3'
+services:
+  yumDatabaseServer:
+    container_name: yumDatabaseServer
+    image: postgres:12-alpine
+    ports:
+      - '5431:5432'
+    environment:
+      - POSTGRES_USER=dbUser
+      - POSTGRES_PASSWORD=toor
+      - POSTGRES_DB=yum
+    volumes:
+      - ./docker-volumes/postgresql:/var/lib/postgresql
+  adminer:
+    image: adminer:latest
+    restart: always
+    ports:
+      - 8080:8080
+networks: 
+  planet-network:
+    driver: bridge
