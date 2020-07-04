@@ -2,6 +2,7 @@ import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 import { AYumEntity } from './aYumEntity';
 import { Tag } from './tag.entity';
 import { Order } from './order.entity';
+import { Dish } from './dish.entity';
 
 @Entity()
 export class Vendor extends AYumEntity {
@@ -14,4 +15,7 @@ export class Vendor extends AYumEntity {
 
   @OneToMany(t => Order, o => o.vendor)
   orders: Order[];
+
+  @OneToMany(t => Dish, d => d.vendor)
+  dishes: Dish[];
 }

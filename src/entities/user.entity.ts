@@ -8,10 +8,10 @@ export class User extends AYumEntity {
   @Column()
   name: string;
 
-  @Column({ length: 255 })
+  @Column()
   email: string;
 
-  @Column({ nullable: true })
+  @Column()
   password: string;
 
   @Column({ nullable: true })
@@ -26,9 +26,6 @@ export class User extends AYumEntity {
   @Column({ nullable: true })
   confirmTokenExpires: Date;
 
-  @Column({ nullable: true })
-  newPasswordToken: string;
-
-  @OneToMany(t => Order, o => o.user)
+  @OneToMany(t => Order, o => o.user, {nullable: true})
   orders: Order[];
 }

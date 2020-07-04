@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { VendorModule } from './admin/vendor/vendor.module';
+import { DatabaseModule } from './database/database.module';
+import { RestaurantModule } from './restaurant/restaurant.module';
 
 @Module({
   imports: [
@@ -19,7 +22,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       "migrationsRun": true,
       "logging": "all",
       "entities": [
-        "dist/src/entities/*.entity.js"
+        "dist/entities/*.entity.js"
       ],
       "migrations": [
         "dist/migrations/*.js",
@@ -31,10 +34,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         "migrationsDir": "/migrations",
         "subscribersDir": "/subscriber"
       }
-    })
+    }),
+    DatabaseModule,
+    VendorModule,
+    RestaurantModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
-
