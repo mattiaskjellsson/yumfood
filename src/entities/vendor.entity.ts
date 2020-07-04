@@ -6,7 +6,7 @@ import { Dish } from './dish.entity';
 
 @Entity()
 export class Vendor extends AYumEntity {
-  @Column()
+  @Column({ length: 128})
   name: string;
 
   @ManyToMany(t => Tag, v => v.vendors)
