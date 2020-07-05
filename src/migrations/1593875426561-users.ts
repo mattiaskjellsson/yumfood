@@ -32,15 +32,22 @@ export class users1593875426561 implements MigrationInterface {
       u.email = x.email;
       u.name = x.name;
       u.password = x.password;
-      u.confirmToken = (Math.floor(+(Math.random().toFixed(5))*100000+1)).toString();
+      u.confirmToken =  this.generateRandomNumber(6);
       u.emailConfirmed = false;
-      u.confirmTokenExpires = new Date(new Date().valueOf() + 1000 * 60 * 60 * 24 * 30);
+      u.confirmTokenExpires = new Date(new Date().valueOf() + 1000 * 60 * 60 * 24 * 30); // Give users 30 days to confirm email
       this.userRepo.save(u);
     });
 
   }
 
+  ///
+  // Generate random number of digits length.
+  private generateRandomNumber(digits: number): string {
+    return (Math.floor(+(Math.random().toFixed(digits+1))*Math.pow(10, digits)+1)).toString();
+  }
+
   public async down(queryRunner: QueryRunner): Promise<void> {
+    // noop
   }
 
 }

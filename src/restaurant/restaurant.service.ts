@@ -19,7 +19,11 @@ export class RestaurantService {
 
   public async get(id: string): Promise<Vendor> {
     this.log.debug(`Get vendor ${id}`);
-    const restaurant = await this.database.findOne(id);
+    const restaurant = await this.database.findOne(
+      id,
+      {
+        relations: ['dishes', 'tags']
+      });
 
     if (restaurant) {
       return restaurant;

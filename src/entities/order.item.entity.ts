@@ -2,15 +2,23 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 import { AYumEntity } from './aYumEntity';
 import { Dish } from './dish.entity';
 import { Order } from './order.entity';
+import { IsDefined, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class OrderItem extends AYumEntity {
-  @ManyToOne(t => Order, u => u.orderItems)
+  @ApiProperty()
+  @IsDefined({ always: true })
+  @ManyToOne(t => Order, u => u.orderItems, { nullable: false})
   order: Order;
 
-  @ManyToOne(t => Dish, d => d.orderItems)
+  @ApiProperty()
+  @IsDefined({ always: true })
+  @ManyToOne(t => Dish, d => d.orderItems, { nullable: false })
   dish: Dish;
 
-  @Column()
+  @ApiProperty()
+  @Column({ nullable: true})
+  @IsString({ always: false})
   request: string;
 }

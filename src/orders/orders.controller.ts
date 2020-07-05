@@ -1,7 +1,8 @@
-import { Controller, Logger, Post, Body, Get, Param } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { Controller, Logger, Post, Body, Get, Param, Response, Res } from '@nestjs/common';
 import { OrdersService } from './orders.service';
-import { OrderDto } from 'src/dto/order';
-import { Order } from 'src/entities/order.entity';
+import { OrderDto } from '../dto/order';
+import { Order } from '../entities/order.entity';
 
 @Controller('orders')
 export class OrdersController {
@@ -12,14 +13,47 @@ export class OrdersController {
   ){}
 
   @Post()
-  public async placeOrder(@Body() order: OrderDto): Promise<any> {
-    this.log.debug(`Place Order ${JSON.stringify(order)}`);
+  public async placeOrder(
+    @Response() res,
+    @Body() order: OrderDto, 
+  ) {
+    try {
+      this.log.debug(`Place Order ${JSON.stringify(order)}`);
+      const o: Order = await this.service.create(order);
+      res.status(200).json(o).send();
+    } catch (e) {
+      this.log.error(e);
+      res.status(500).json(e).send();
+    }
   }
 
   @Get('user/:id')
-  public async userOrders(@Param('id') id: string): Promise<Order[]> {
-    this.log.debug(`Get users (${id}) orders`);
+  public async user(
+    @Param('id') id: string,
+    @Res() resp: any,
+  ) {
+    try {
+      this.log.debug(`Get users (${id}) orders`);
+      const orders = this.service.userOrders(id);
+      resp.status(200).json(orders).send();
+    } catch (e) {
+      this.log.error(e);
+      resp.status(500).json(e).send();
+    }
+  }
 
-    return null;
+  @Get('vendor/:id')
+  public async vendor(
+    @Param('id') id: string,
+    @Res() res: any,
+  ) {
+    try {
+      this.log.debug(`Get vendor (${id}) orders`);
+      const orders = this.service.vendorOrders(id);
+      res.status(200).json(orders).send();
+    } catch (e) {
+      this.log.error(e);
+      res.status(500).json(e).send();
+    }
   }
 }

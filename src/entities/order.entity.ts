@@ -3,18 +3,30 @@ import { AYumEntity } from './aYumEntity';
 import { User } from './user.entity';
 import { Vendor } from './vendor.entity';
 import { OrderItem } from './order.item.entity';
+import { IsDefined, IsArray, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class Order extends AYumEntity {
-  @ManyToOne(t => User, u => u.orders)
+  @ApiProperty()
+  @IsDefined({ always: true})
+  @ManyToOne(t => User, u => u.orders, { nullable: false})
   user: User;
 
-  @ManyToOne(t => Vendor, v => v.orders)
+  @ApiProperty()
+  @IsDefined({ always: true})
+  @ManyToOne(t => Vendor, v => v.orders, { nullable: false})
   vendor: Vendor;
 
-  @OneToMany(t => OrderItem, oi => oi.order)
+  @ApiProperty()
+  @IsDefined({ always: true})
+  @IsArray({ always: true})
+  @OneToMany(t => OrderItem, oi => oi.order, { nullable: false})
   orderItems: OrderItem[];
 
+  @ApiProperty()
   @Column()
+  @IsDefined({ always: true})
+  @IsString({ always: true})
   request: string;
 }

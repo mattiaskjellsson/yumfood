@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Injectable } from '@nestjs/common';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
-import { Vendor } from '../entities/vendor.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from '../entities/user.entity';
 
 @Injectable()
-export class VendorDatabaseService extends TypeOrmCrudService<Vendor> {
-  constructor(@InjectRepository(Vendor) repo) {
+export class UserDatabaseService extends TypeOrmCrudService<User> {
+  constructor(@InjectRepository(User) repo) {
     super(repo);
   }
 }

@@ -7,6 +7,13 @@ import { Vendor } from '../../entities/vendor.entity';
   model: {
     type: Vendor,
   },
+  query: {
+    join: {
+      tags: { eager: true },
+      orders: { eager: true },
+      dishes: { eager: true},
+    }
+  },
 })
 @Controller('admin/vendor')
 export class VendorController {

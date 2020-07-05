@@ -8,6 +8,10 @@ import { Vendor } from '../entities/vendor.entity';
 import { VendorDatabaseService } from './vendor.service';
 import { OrderItem } from '../entities/order.item.entity';
 import { Dish } from '../entities/dish.entity';
+import { OrderItemDatabaseService } from './order.item.service';
+import { OrderDatabaseService } from './order.service';
+import { DishDatabaseService } from './dish.service';
+import { UserDatabaseService } from './user.service';
 
 const enteties = [
   Dish,
@@ -19,6 +23,10 @@ const enteties = [
 ];
 
 const services: any[] = [
+  DishDatabaseService,
+  OrderItemDatabaseService,
+  OrderDatabaseService,
+  UserDatabaseService,
   VendorDatabaseService,
 ];
 
