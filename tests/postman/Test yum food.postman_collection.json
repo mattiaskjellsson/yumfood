@@ -1,0 +1,215 @@
+{
+	"info": {
+		"_postman_id": "b6e9a68f-3591-4da0-bba5-b010c57c3649",
+		"name": "Test yum food",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get restaurants",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "208d50a3-8069-489a-a7fb-22836d751ca4",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// save the `item_id` returned in the response as an environment variable",
+							"let jsonResponse = pm.response.json();",
+							"pm.environment.set(\"restaurantId\", jsonResponse[0].id);",
+							"pm.environment.set(\"restaurantName\", jsonResponse[0].name);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/restaurant/",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"restaurant",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get restaurant dishes",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d9705aed-3975-403c-baa6-a71174a30973",
+						"exec": [
+							"var restaurantId = pm.variables.get(\"restaurantId\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b9bae3c9-c664-4636-9382-a4d08cf3d91b",
+						"exec": [
+							"var schema = [{",
+							"    \"id\": \"string\",",
+							"    \"vendor\": {},",
+							"    \"name\": \"string\",",
+							"    \"price\": \"number\"",
+							"}];",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let jsonResponse = pm.response.json();",
+							"",
+							"pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonResponse, schema)).to.be.true;",
+							"});",
+							"",
+							"pm.environment.set(\"dishId\", jsonResponse[0].id);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/restaurant/{{restaurantId}}/dishes",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"restaurant",
+						"{{restaurantId}}",
+						"dishes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "222409ec-193f-4373-b336-2d38c2170174",
+						"exec": [
+							"var schema = {",
+							"    \"id\": \"string\",",
+							"    \"name\": \"string\",",
+							"    \"email\": \"string\",",
+							"    \"orders\": []",
+							"};",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"let jsonResponse = pm.response.json();",
+							"",
+							"pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonResponse, schema)).to.be.true;",
+							"});",
+							"",
+							"pm.environment.set(\"userId\", jsonResponse[0].id);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/admin/user",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"admin",
+						"user"
+					]
+				},
+				"description": "Get a list of users and store the first on"
+			},
+			"response": []
+		},
+		{
+			"name": "Post order",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0aca293d-da1d-422c-8949-a82a6face3d8",
+						"exec": [
+							"var restaurantId = pm.variables.get(\"restaurantId\");",
+							"var dishId = pm.variables.get(\"dishId\");",
+							"var userId = pm.variables.get(\"userId\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "2278c784-6412-49d7-ba12-fb83d79c12d8",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vendorId\": \"{{restaurantId}}\",\n    \"userId\": \"{{userId}}\",\n    \"orderItems\": [\n        {\n            \"dishId\": \"{{dishId}}\",\n            \"request\": \"Extra cheese\"\n        }\n    ],\n    \"request\": \"Keept the change you filthy animal\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/orders",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"orders"
+					]
+				},
+				"description": "Make an order"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
