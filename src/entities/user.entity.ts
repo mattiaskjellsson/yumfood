@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, Unique } from 'typeorm';
 import { AYumEntity } from './aYumEntity';
 import { Order } from './order.entity';
-import { IsString, MinLength, IsDefined, IsBoolean } from 'class-validator';
+import { IsString, IsDefined, IsBoolean, IsEmail } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
@@ -14,8 +14,7 @@ export class User extends AYumEntity {
 
   @ApiProperty()
   @Column({nullable: false})
-  @IsString({ always: true})
-  @MinLength( 5, { always: true})
+  @IsEmail()
   @IsDefined({ always: true})
   email: string;
 
