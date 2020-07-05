@@ -13,8 +13,7 @@ export class OrderDatabaseService extends TypeOrmCrudService<Order> {
   }
 
   public async saveOrder(o: Order) : Promise<Order> {
-    const oo = await this.repo.save(o);
-    this.log.debug(JSON.stringify(oo));    
+    const oo = await this.repo.save(o);  
     return oo;
   }
 }

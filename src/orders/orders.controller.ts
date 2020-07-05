@@ -18,7 +18,6 @@ export class OrdersController {
     @Body() order: OrderDto, 
   ) {
     try {
-      this.log.debug(`Place Order ${JSON.stringify(order)}`);
       const o: Order = await this.service.create(order);
       res.status(200).json(o).send();
     } catch (e) {
@@ -33,7 +32,6 @@ export class OrdersController {
     @Res() resp: any,
   ) {
     try {
-      this.log.debug(`Get users (${id}) orders`);
       const orders = this.service.userOrders(id);
       resp.status(200).json(orders).send();
     } catch (e) {
@@ -48,7 +46,6 @@ export class OrdersController {
     @Res() res: any,
   ) {
     try {
-      this.log.debug(`Get vendor (${id}) orders`);
       const orders = this.service.vendorOrders(id);
       res.status(200).json(orders).send();
     } catch (e) {

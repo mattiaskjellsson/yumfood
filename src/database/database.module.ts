@@ -12,6 +12,7 @@ import { OrderItemDatabaseService } from './order.item.service';
 import { OrderDatabaseService } from './order.service';
 import { DishDatabaseService } from './dish.service';
 import { UserDatabaseService } from './user.service';
+import { TagDatabaseService } from './tag.service';
 
 const enteties = [
   Dish,
@@ -26,6 +27,7 @@ const services: any[] = [
   DishDatabaseService,
   OrderItemDatabaseService,
   OrderDatabaseService,
+  TagDatabaseService,
   UserDatabaseService,
   VendorDatabaseService,
 ];
