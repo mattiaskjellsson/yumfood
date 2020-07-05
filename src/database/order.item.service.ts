@@ -9,4 +9,8 @@ export class OrderItemDatabaseService extends TypeOrmCrudService<OrderItem> {
   constructor(@InjectRepository(OrderItem) repo) {
     super(repo);
   }
+
+  public async save(oi: OrderItem): Promise<OrderItem> {
+      return await this.repo.save(oi);
+  }
 }

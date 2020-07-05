@@ -6,40 +6,44 @@ import { VendorModule } from './admin/vendor/vendor.module';
 import { DatabaseModule } from './database/database.module';
 import { RestaurantModule } from './restaurant/restaurant.module';
 import { OrdersModule } from './orders/orders.module';
+import { UserModule } from './admin/user/user.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      "name": "default",
-      "type": "postgres",
-      "host": "localhost", 
-      "username": "dbUser", 
-      "password": "toor",
-      "database": "yum",
-      "port": 5431,
-      "ssl": false,
-      "synchronize": true,
-      "dropSchema": true,
-      "migrationsRun": true,
-      "logging": "all",
-      "entities": [
-        "dist/entities/*.entity.js"
-      ],
-      "migrations": [
-        "dist/migrations/*.js",
-      ],
-      "subscribers": [
-        "subscriber/**/*js"
-      ],
-      "cli": {
-        "migrationsDir": "/migrations",
-        "subscribersDir": "/subscriber"
+    TypeOrmModule.forRoot(
+      {
+        "name": "default",
+        "type": "postgres",
+        "host": "localhost", 
+        "username": "dbUser", 
+        "password": "toor",
+        "database": "yum",
+        "port": 5431,
+        "ssl": false,
+        "synchronize": true,
+        "dropSchema": true,
+        "migrationsRun": true,
+        "logging": "all",
+        "entities": [
+          "dist/entities/*.entity.js"
+        ],
+        "migrations": [
+          "dist/migrations/*.js",
+        ],
+        "subscribers": [
+          "subscriber/**/*js"
+        ],
+        "cli": {
+          "migrationsDir": "/migrations",
+          "subscribersDir": "/subscriber"
+        }
       }
-    }),
+    ),
     DatabaseModule,
     VendorModule,
     RestaurantModule,
     OrdersModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

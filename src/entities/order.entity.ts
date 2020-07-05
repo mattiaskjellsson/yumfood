@@ -25,8 +25,8 @@ export class Order extends AYumEntity {
   orderItems: OrderItem[];
 
   @ApiProperty()
-  @Column()
-  @IsDefined({ always: true})
-  @IsString({ always: true})
+  @Column({ nullable: true})
+  @IsDefined({ always: false})
+  @IsString({ always: false})
   request: string;
 }
