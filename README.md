@@ -7,6 +7,33 @@ Install docker (https://docker.com/)
 ```bash
 $ npm install
 ```
+Create .env file containing the following enteries
+
+```
+DB_HOST
+DB_USER
+DB_PASS
+DB_DATABASE
+DB_PORT
+DB_SSL
+DB_SYNCHRONIZE
+DB_DROP_SCHEMA
+DB_MIGRATIONS_RUN
+```
+
+Example 
+
+```
+DB_HOST=localhost
+DB_USER=dbUser
+DB_PASS=secret
+DB_DATABASE=yum
+DB_PORT=5431
+DB_SSL=false
+DB_SYNCHRONIZE=true
+DB_DROP_SCHEMA=true
+DB_MIGRATIONS_RUN=true
+```
 
 ## Running the app
 

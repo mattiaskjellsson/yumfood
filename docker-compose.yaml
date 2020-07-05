@@ -4,11 +4,11 @@ services:
     container_name: yumDatabaseServer
     image: postgres:12-alpine
     ports:
-      - '5431:5432'
+      - '${DB_PORT}:5432'
     environment:
-      - POSTGRES_USER=dbUser
-      - POSTGRES_PASSWORD=toor
-      - POSTGRES_DB=yum
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASS}"
+      POSTGRES_DB: "${DB_DATABASE}"
     volumes:
       - ./docker-volumes/postgresql:/var/lib/postgresql
   adminer:
